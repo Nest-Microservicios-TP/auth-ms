@@ -5,6 +5,7 @@ import { checkPassword } from "src/helpers/bcrypt.helper";
 import { JwtService } from "@nestjs/jwt";
 import { RegisterDto } from "./dto/register-dto";
 import { RpcException } from "@nestjs/microservices";
+import { envs } from "src/config";
   
   @Injectable()
   export class AuthService {
@@ -28,7 +29,7 @@ import { RpcException } from "@nestjs/microservices";
         }
     
 
-        if(email !== 'super@super.com'){
+        if(email !== envs.superadmin_email){
           const isPasswordValid = await checkPassword(password, user.password);
     
         if (!isPasswordValid) {

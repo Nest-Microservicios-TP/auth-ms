@@ -13,9 +13,9 @@ import { RpcException } from '@nestjs/microservices';
 @Injectable()
 export class UsersService {
   constructor(
-        @InjectModel(User)
+    @InjectModel(User)
     private userModel: typeof User,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto): Promise<CreateUserDto> {
     const { email } = createUserDto;
@@ -29,9 +29,9 @@ export class UsersService {
     if (user) {
       if (!user.deletedAt) {
         throw new RpcException({
-        message: `User already exists`,
-        status: HttpStatus.BAD_REQUEST
-      })
+          message: `User already exists`,
+          status: HttpStatus.BAD_REQUEST
+        })
       }
       //Si el usuario tiene un deletedAt quiere decir que fue borrado
       //Osea que puedo usar su correo para crear otro usuario
@@ -48,7 +48,12 @@ export class UsersService {
     });
 
     //Verifico si hay usuarios
-    if (users.length === 0) throw new NotFoundException('Could Not Find Users');
+    if (users.length === 0) {
+      throw new RpcException({
+        message: `Users Not Found`,
+        status: HttpStatus.NOT_FOUND
+      })
+    }
 
     return users;
   }
@@ -94,9 +99,9 @@ export class UsersService {
       });
       if (isUsed) {
         throw new RpcException({
-        message: `Email Already Exists`,
-        status: HttpStatus.BAD_REQUEST
-      })
+          message: `Email Already Exists`,
+          status: HttpStatus.BAD_REQUEST
+        })
       };
     }
 
@@ -126,7 +131,7 @@ export class UsersService {
     const user = await this.findOne(id, false);
 
     if (user.role === 'superadmin') {
-     throw new RpcException({
+      throw new RpcException({
         message: `SuperAdmin can't be deleted`,
         status: HttpStatus.BAD_REQUEST
       });

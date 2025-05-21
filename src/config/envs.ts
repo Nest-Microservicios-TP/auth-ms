@@ -8,6 +8,8 @@ interface EnvVars {
   DATABASE_NAME: string;
   DATABASE_USERNAME: string;
   DATABASE_PASS: string;
+  SUPERADMIN_EMAIL: string;
+  TOKEN: string;
 }
 
 const envsSchema = joi
@@ -17,7 +19,8 @@ const envsSchema = joi
     DATABASE_PORT: joi.number().required(),
     DATABASE_NAME: joi.string().required(),
     DATABASE_USERNAME: joi.string().required(),
-    DATABASE_PASS: joi.string().required(),
+    SUPERADMIN_EMAIL: joi.string().required(),
+    TOKEN: joi.string().required(),
   })
   .unknown(true);
 
@@ -36,4 +39,6 @@ export const envs = {
   database_name: envVars.DATABASE_NAME,
   database_username: envVars.DATABASE_USERNAME,
   database_pass: envVars.DATABASE_PASS,
+  superadmin_email: envVars.SUPERADMIN_EMAIL,
+  token: envVars.TOKEN,
 };
