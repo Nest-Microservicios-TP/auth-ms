@@ -5,8 +5,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './modules/users/user.model';
 import { envs } from './config';
-import { Cart } from './modules/user-cart/user-cart.model';
-import { UserCartModule } from './modules/user-cart/user-cart.module';
 
 @Module({
   imports: [
@@ -19,7 +17,7 @@ import { UserCartModule } from './modules/user-cart/user-cart.module';
         username: envs.database_username,
         password: envs.database_pass,
         database: envs.database_name,
-        models: [User, Cart],
+        models: [User],
         autoLoadModels: true,
         synchronize: true,
       }),
@@ -27,7 +25,6 @@ import { UserCartModule } from './modules/user-cart/user-cart.module';
     }),
     UsersModule,
     AuthModule,
-    UserCartModule,
   ],
   controllers: [],
   providers: [],
