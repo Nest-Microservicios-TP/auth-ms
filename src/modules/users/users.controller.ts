@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, ParseIntPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,7 +19,7 @@ export class UsersController {
   }
 
   @MessagePattern({ cmd: 'findUserById' })
-  findOne(@Payload() id: number) {
+  findOne(@Payload('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
@@ -29,17 +29,17 @@ export class UsersController {
   }
 
   @MessagePattern({ cmd: 'changeUserRole' })
-  changeRole(@Payload() id: number) {
+  changeRole(@Payload('id', ParseIntPipe) id: number) {
     return this.usersService.changeRole(id);
   }
 
   @MessagePattern({ cmd: 'removeUser' })
-  remove(@Payload() id: number) {
+  remove(@Payload('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);
   }
 
   @MessagePattern({ cmd: 'restoreUser' })
-  restore(@Payload() id: number) {
+  restore(@Payload('id', ParseIntPipe) id: number) {
     return this.usersService.restore(id);
   }
 

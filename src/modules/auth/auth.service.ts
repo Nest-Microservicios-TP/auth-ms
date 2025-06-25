@@ -40,7 +40,7 @@ import { envs } from "src/config";
         }
         }
     
-        const payload = { email: user.email, role: user.role };
+        const payload = { email: user.email, role: user.role, id: user.id };
     
         const token = await this.jwtService.signAsync(payload);
     
